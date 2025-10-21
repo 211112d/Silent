@@ -501,7 +501,7 @@ do
     l.TextStrokeTransparency=0
     l.TextSize=14
     l.TextColor3=Color3.fromRGB(255,255,255)
-    l.Text="[p] Toggle GUI"
+    l.Text="[Insert] Toggle GUI"
     l.TextWrapped=true
     l.TextWrap=true
     l.Font=100
@@ -543,7 +543,9 @@ editwatermark = library.GUI.ChildAdded:Connect(function(ch)
     end
     editwatermark:Disconnect()
 end)
-
+local watermark = library:AddWatermark('Ardour Hub [FREE] ')
+watermark.AnchorPoint = Vector2.new(0.5, 0.5)
+watermark.Position = UDim2.new(0.5, 0, 0.05, 0)
 
 local mainhome = home:AddSection('Info')
 local aim = combat:AddSection('Aim')
@@ -582,6 +584,11 @@ end)
 aim:AddLabel('No Recoil/Spread enables with Silent Aim')
 aim:AddToggle('Silent Aim', true, nil, function(v)
     aimbool = v
+    if v == true then
+        require(game.ReplicatedStorage.Modules.FPS.Bullet).CreateBullet = aimmodfunc
+    else
+        require(game.ReplicatedStorage.Modules.FPS.Bullet).CreateBullet = aimogfunc
+    end
 end)
 aim:AddToggle('Visibility check', true, nil, function(v)
     aimvischeck = v
@@ -994,7 +1001,7 @@ speedh:AddSeparateBar()
 speedh:AddToggle('Humanoid changer', true, nil, function(v)
     changerbool = v
 end)
-speedh:AddSlider('Humanoid Speed', 19, 0, 18, function(c) 
+speedh:AddSlider('Humanoid Speed', 21, 0, 20, function(c) 
     changerspeed = c
 end)
 speedh:AddSlider('Humanoid Jumpheight', 8, 0, 3, function(c) 
@@ -1239,7 +1246,10 @@ local function choosetarget()
     local ctar = nil
     local cpart = nil
 
-    
+    local ammodistance = 999999999
+    if aimdistcheck and globalammo then
+        ammodistance = globalammo:GetAttribute("MuzzleVelocity")
+    end
 
     local bparts = {
         "Head",

@@ -580,13 +580,8 @@ mainhome:AddButton('Sigma suicide',function()
 end)
 
 aim:AddLabel('No Recoil/Spread enables with Silent Aim')
-aim:AddToggle('Silent Aim', false, nil, function(v)
+aim:AddToggle('Silent Aim', true, nil, function(v)
     aimbool = v
-    if v == true then
-        require(game.ReplicatedStorage.Modules.FPS.Bullet).CreateBullet = aimmodfunc
-    else
-        require(game.ReplicatedStorage.Modules.FPS.Bullet).CreateBullet = aimogfunc
-    end
 end)
 aim:AddToggle('Visibility check', true, nil, function(v)
     aimvischeck = v

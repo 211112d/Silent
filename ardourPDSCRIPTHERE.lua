@@ -6,7 +6,7 @@ function Notify(tt, tx)
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = tt,
         Text = tx,
-        Duration = 4
+        Duration = 2
     })
 end
 function getcurrentgun(plr)
@@ -501,7 +501,7 @@ do
     l.TextStrokeTransparency=0
     l.TextSize=14
     l.TextColor3=Color3.fromRGB(255,255,255)
-    l.Text="[Insert] Toggle GUI"
+    l.Text="[P] Toggle GUI"
     l.TextWrapped=true
     l.TextWrap=true
     l.Font=100
@@ -541,11 +541,7 @@ editwatermark = library.GUI.ChildAdded:Connect(function(ch)
         ch.Position = UDim2.new(0.5, 0, 0.05, 0)
         Instance.new("UICorner", ch).CornerRadius = UDim.new(0.2, 0)
     end
-    editwatermark:Disconnect()
-end)
-local watermark = library:AddWatermark('Ardour Hub [FREE] ')
-watermark.AnchorPoint = Vector2.new(0.5, 0.5)
-watermark.Position = UDim2.new(0.5, 0, 0.05, 0)
+
 
 local mainhome = home:AddSection('Info')
 local aim = combat:AddSection('Aim')
@@ -562,8 +558,8 @@ local worldh = other:AddSection('World')
 local vmisc = other:AddSection('Misc')
 
 
-mainhome:AddLabel('The script version is "Xray - 9" ')
-mainhome:AddKeyBind('Toggle GUI', Enum.KeyCode.Insert, function() 
+mainhome:AddLabel('The script version is "67 Mangos" ')
+mainhome:AddKeyBind('Toggle GUI', Enum.KeyCode.P, function() 
     if scriptloading then return end
     librarymaingui.Visible = not librarymaingui.Visible
     if scgui and scbool then

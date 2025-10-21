@@ -534,8 +534,6 @@ local home = library:AddWindow('Home')
 local combat = library:AddWindow('Combat')
 local visual = library:AddWindow('Visuals')
 local other = library:AddWindow('Other')
-local editwatermark
-editwatermark = library.GUI.ChildAdded:Connect(function(ch)
     if ch:IsA("Frame") then
         ch.AnchorPoint = Vector2.new(0.5, 0.5)
         ch.Position = UDim2.new(0.5, 0, 0.05, 0)
@@ -3533,7 +3531,7 @@ runs.RenderStepped:Connect(function(delta) --  fast
                 dobj.FillTransparency = espchamsfill
                 dobj.OutlineTransparency = espchamsline
                 dobj.Enabled = esphigh
-            end
+            end 
         else
             if dtype == "Highlight" then
                 dobj.Enabled = false

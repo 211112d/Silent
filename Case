@@ -1,0 +1,75 @@
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+_G.ScriptEnabled = true
+_G.AutoClaim = true
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local OpenCase = ReplicatedStorage.Cases.Remotes.OpenCase
+local ClickMoney = ReplicatedStorage.UI.Remotes.ClickMoney
+local ClaimGift = ReplicatedStorage.GiftFolder.ClaimGift
+
+local weightedCases = {
+    {name = "2014 Summer Case", weight = 50},
+    {name = "Free Case", weight = 10},
+    {name = "weapon Case 3", weight = 10},
+    {name = "Revolution Case", weight = 10},
+    {name = "Fracture Case", weight = 10},
+    {name = "Kilowatt Case", weight = 5},
+    {name = "Snakebite Case", weight = 5},
+}
+
+local function pickWeightedCase()
+    local totalWeight = 0
+    for _, c in ipairs(weightedCases) do
+        totalWeight = totalWeight + c.weight
+    end
+    local rand = math.random() * totalWeight
+    local cumulative = 0
+    for _, c in ipairs(weightedCases) do
+        cumulative = cumulative + c.weight
+        if rand <= cumulative then
+            return c.name
+        end
+    end
+    return weightedCases[1].name
+end
+task.spawn(function()
+    while _G.ScriptEnabled do
+        local caseName = pickWeightedCase()
+        local success, result = pcall(function()
+            return OpenCase:InvokeServer(caseName, 1)
+        end)
+        if success then
+            if result == nil then
+            else
+                print(caseName .. " opened:", result)
+            end
+        else
+        end
+        task.wait(0.5)
+    end
+end)
+task.spawn(function()
+    while _G.ScriptEnabled do
+        pcall(function()
+            ClickMoney:FireServer()
+        end)
+        task.wait()
+    end
+end)
+task.spawn(function()
+    while _G.ScriptEnabled and _G.AutoClaim do
+        for i = 1, 9 do
+            local success, result = pcall(function()
+                return ClaimGift:InvokeServer(i)
+            end)
+            if success then
+                if result == nil then
+                else
+                end
+            else
+            end
+            task.wait()
+        end
+    end
+end)
